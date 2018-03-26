@@ -2,10 +2,15 @@
 # Developed by Ryan J. Quinlan
 # Contact: rjq@rjqfx.com
 
-from PySide import QtGui
-
 import nuke
 import nukescripts
+
+# from PySide import QtGui
+if nuke.NUKE_VERSION_MAJOR < 11:
+    from PySide import QtCore, QtUiTools, QtGui, QtGui as QtWidgets
+else:
+    from PySide2 import QtGui, QtCore, QtUiTools, QtWidgets
+
 
 def find_file_knobs(knobs):
     """Identifies File_Knob knobs.
@@ -99,7 +104,7 @@ def copy_paths():
                 paths.extend(path)
 
         if paths:
-            clipboard = QtGui.QApplication.clipboard()
+            clipboard = QtWidgets.QApplication.clipboard()
             clipboard.setText('\n'.join(paths))
         else:
             nuke.message("No file paths found")
